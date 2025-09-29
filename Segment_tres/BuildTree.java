@@ -1,5 +1,4 @@
-package Segment_tres;
-import java.util.Arrays;
+package segment_tres;
 
 public class BuildTree {
 
@@ -14,11 +13,25 @@ public class BuildTree {
         build(arr, seg, mid+1, high, 2*ind+2);
         seg[ind] = Math.min(seg[2*ind+1],seg[2*ind+2]);
     }
+
+    // find min between the range
+    static int minBetweenRange(int[] seg,int l,int r,int low,int high) {
+        //no overlap
+        if(r<low || l>high) {
+            return Integer.MAX_VALUE;
+        } else if(low<=l && high<=r) {
+            return seg[low];
+        } else {
+            return 1;
+        }
+    }
+
     public static void main(String[] args) {
         int[] arr = {2,1,0,4,3,7};
         int n = arr.length;
         int[] seg = new int[4*n];
         build(arr,seg,0,arr.length-1,0);
-        System.out.println(Arrays.toString(seg));
+        // System.out.println(Arrays.toString(seg));
+
     }
 }
