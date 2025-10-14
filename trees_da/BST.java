@@ -1,5 +1,6 @@
 package trees_da;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class BST {
 
@@ -64,6 +65,52 @@ public class BST {
         display(node.right, "Right child of "+node.value+": ");
     }
 
+    //traversals
+    public static ArrayList<Integer> inorder() {
+        ArrayList<Integer> ls = new ArrayList<>();
+        inorder(root,ls);
+        return ls;
+    }
+
+    public static void inorder(Node node,ArrayList<Integer> ls) {
+        if(node==null) {
+            return;
+        }
+        inorder(node.left,ls);
+        ls.add(node.value);
+        inorder(node.right,ls);
+    }
+
+     public static ArrayList<Integer> preorder() {
+        ArrayList<Integer> ls = new ArrayList<>();
+        preorder(root,ls);
+        return ls;
+    }
+
+    public static void preorder(Node node,ArrayList<Integer> ls) {
+        if(node==null) {
+            return;
+        }
+        ls.add(node.value);
+        preorder(node.left,ls);
+        preorder(node.right,ls);
+    }
+
+     public static ArrayList<Integer> postorder() {
+        ArrayList<Integer> ls = new ArrayList<>();
+        postorder(root,ls);
+        return ls;
+    }
+
+    public static void postorder(Node node,ArrayList<Integer> ls) {
+        if(node==null) {
+            return;
+        }
+        postorder(node.left,ls);
+        postorder(node.right,ls);
+        ls.add(node.value);
+    }
+
     public static void main(String[] args) {
         System.out.println("Enter number of elements in the tree:");
         int n = sc.nextInt();
@@ -74,5 +121,8 @@ public class BST {
         }
         display();
         System.out.println("Is the tree balanced? "+balanced());
+        System.out.println("Inorder Traversal: "+inorder());
+        System.out.println("Preorder Traversal: "+preorder());
+        System.out.println("Postorder Traversal: "+postorder());
     }
 }
