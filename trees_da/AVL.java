@@ -1,6 +1,5 @@
 import java.util.*;
 
-import org.w3c.dom.Node;
 public class AVL {
 
     private static class Node {
@@ -16,11 +15,11 @@ public class AVL {
     static Scanner sc = new Scanner(System.in);
     static private Node root;
 
-    public void insert(int value) {
+    public static void insert(int value) {
         root = insert(value,root);
     }
 
-    public Node insert(int value,Node node) {
+    public static Node insert(int value,Node node) {
         if(node == null) {
             return new Node(value);
         }
@@ -28,32 +27,63 @@ public class AVL {
             node.left = insert(value, node.left);
         }
         if(value>node.value) {
-            node.left = insert(value, node.right);
+            node.right = insert(value, node.right);
         }
         node.height = Math.max(height(node.left),height(node.right))+1;
+        return rotate(node);
+    }
+
+    public static Node rotate(Node node) {
+        if(height(node.left)-height(node.right)>1) {
+            //left side is heavy
+            if(height(node.left.left)-height(node.left.right)<0) {
+                //left-left
+                return rotateRight(node);
+            }
+            if(height(node.left.left)-height(node.left.right)>0) {
+                //left-right
+                node.left = rotateLeft(node.left);
+                return rotateRight(node);
+            }
+        }
+        if(height(node.left)-height(node.right)<-1) {
+            //right side is heavy
+            if(height(node.right.left)-height(node.right.right)<0) {
+                //right-right
+                return rotateLeft(node);
+            }
+            if(height(node.right.left)-height(node.right.right)>0) {
+                //right-left
+                node.right = rotateRight(node.right);
+                return rotateLeft(node);
+            }
+        }
         return node;
     }
 
-    public void rotate(Node node) {
-        if(height(node.right)-height(node.right)<-1) {
-            //left side is heavy
-            if(height(node.left.right)-height(node.left.left)<0) {
-                //left-left
-                rotateRight(node);
-            }
-            if(height(node.left.right)-height(node.left.left)>0) {
-                //left-right
-                rotateLeft(node.left);
-                rotateRight(node);
-            }
-        }
+    public static Node rotateLeft(Node p) {
+        if (p == null || p.right == null) return p;
+        Node c = p.right;
+        Node t = c.left;
+        c.left  = p;
+        p.right = t;
+        p.height = Math.max(height(p.left),height(p.right))+1;
+        c.height = Math.max(height(c.left),height(c.right))+1;
+        return c;
     }
 
-    public void rotateLeft(Node node) {
-        if()
+    public static Node rotateRight(Node p) {
+        if (p == null || p.left == null) return p;
+        Node c = p.left;
+        Node t = c.right;
+        c.right = p;
+        p.left = t;
+        p.height = Math.max(height(p.left),height(p.right))+1;
+        c.height = Math.max(height(c.left),height(c.right))+1;
+        return c;
     }
 
-    public int height(Node node) {
+    public static int height(Node node) {
         if(node==null) {
             return -1;
         }
@@ -83,13 +113,12 @@ public class AVL {
     }    
 
     public static void main(String[] args) {
-        System.out.println("Enter number of elements in the tree:");
-        int n = sc.nextInt();
-        System.out.println("Enter tree elements");
 
-        for(int i=0;i<n;i++) {
-            insert(sc.nextInt());
+        int[] arr = {7,4,2,1,9,8,6,5};
+        for(int i:arr) {
+            insert(i);
         }
+        System.out.println("Is tree balanced: "+balanced());
         display();
     }
 }
