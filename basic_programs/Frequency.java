@@ -19,6 +19,24 @@ public class Frequency {
         for(int i=0;i<n;i++) {
             arr[i] = sc.nextInt();  
         }
-        System.out.println(frequencyEle(arr));
+        HashMap<Integer,Integer> hm = frequencyEle(arr);
+        int max = Integer.MIN_VALUE;
+        int secMax = Integer.MIN_VALUE;
+        int ele = -1;
+        int prev = -1;
+        for(int i:hm.keySet()) {
+            if(hm.get(i)>max) {
+                secMax = max;
+                ele = prev;
+                max = hm.get(i);
+                prev = i;
+            }
+            else if(hm.get(i)>secMax&&hm.get(i)<max) {
+                secMax = hm.get(i);
+                ele = i;
+            }
+        }
+        System.out.println(hm);
+        System.out.println("Second largest: "+ele);
     }
 }
