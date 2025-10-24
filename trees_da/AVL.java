@@ -1,4 +1,4 @@
-import java.util.*;
+//import java.util.*;
 
 public class AVL {
 
@@ -12,7 +12,7 @@ public class AVL {
         }
     }
 
-    static Scanner sc = new Scanner(System.in);
+    //static Scanner sc = new Scanner(System.in);
     static private Node root;
 
     public static void insert(int value) {
