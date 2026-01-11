@@ -32,6 +32,5 @@ public class BuildTree {
         int[] seg = new int[4*n];
         build(arr,seg,0,arr.length-1,0);
         // System.out.println(Arrays.toString(seg));
-
     }
 }
